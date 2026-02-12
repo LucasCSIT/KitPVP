@@ -1,0 +1,12 @@
+name: KitPVP
+version: 1.0.0
+main: io.papermc.kitPVP.KitPVP
+description: A KitPVP plugin.
+author: Lucas Garcia
+api: '1.21.11'
+load: STARTUP
+prefix: KitPVP
+commands:
+  enableKitPVP:
+    description: Enable or disable the KitPVP plugin
+    usage: /kitpvp <enable|disable>

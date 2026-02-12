@@ -8,7 +8,7 @@ KitPVP is a **plugin** for Minecraft: Java Edition v1.21.11 that enables KitPVP 
 ## Features
 * **Five** classes to choose from
 * The ability to enable and disable KitPVP via a command
-* 
+
 ## Installation
 1. Download [PaperMC v1.21.11](https://papermc.io).
 2. Download the plugin from the [official Hangar page](https://hangar.papermc.io/Sharp/Thor).

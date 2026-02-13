@@ -15,7 +15,7 @@ public class KitPVP extends JavaPlugin implements Listener {
   @Override
   public void onEnable() {
     Bukkit.getPluginManager().registerEvents(this, this);
-    registerCommand("kitpvp", new ToggleKitPVPCommand());
+    registerCommand("kitpvp", new ToggleKitPVPCommand(pluginEnabled));
   }
 
   @Override

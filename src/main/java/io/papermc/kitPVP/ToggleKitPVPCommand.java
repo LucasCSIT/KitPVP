@@ -9,6 +9,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class ToggleKitPVPCommand implements BasicCommand {
+  private boolean pluginEnabled;
+
+  public ToggleKitPVPCommand(boolean pluginEnabled) {
+    this.pluginEnabled = pluginEnabled;
+  }
+
   @Override
   public void execute(CommandSourceStack source, String[] args) {
     final Component name = source.getExecutor() != null
@@ -31,13 +37,13 @@ public class ToggleKitPVPCommand implements BasicCommand {
       );
     } else if (message.equalsIgnoreCase("disable")) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "<red><bold>BROADCAST</red> <name> <dark_gray>»</dark_gray> has disabled KitPVP",
+          "<red><bold>BROADCAST</red> <name> <dark_gray></dark_gray> has disabled KitPVP",
           Placeholder.component("name", name),
           Placeholder.unparsed("message", message)
       );
     } else {
       if (source.getSender() instanceof Player player) {
-        player.sendMessage("Invalid ");
+        player.sendMessage("Invalid arguments. /kitpvp <enable|disable>");
       }
     }
 

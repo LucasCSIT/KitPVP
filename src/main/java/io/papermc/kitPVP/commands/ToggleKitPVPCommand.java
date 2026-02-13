@@ -1,5 +1,6 @@
-package io.papermc.kitPVP;
+package io.papermc.kitPVP.commands;
 
+import io.papermc.kitPVP.KitPVP;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -9,12 +10,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class ToggleKitPVPCommand implements BasicCommand {
-  private boolean pluginEnabled;
-
-  public ToggleKitPVPCommand(boolean pluginEnabled) {
-    this.pluginEnabled = pluginEnabled;
-  }
-
   @Override
   public void execute(CommandSourceStack source, String[] args) {
     final Component name = source.getExecutor() != null
@@ -31,19 +26,20 @@ public class ToggleKitPVPCommand implements BasicCommand {
 
     if (message.equalsIgnoreCase("enable")) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "<red><bold>BROADCAST</red> <name> <dark_gray></dark_gray> has enabled KitPVP.",
+          "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has enabled KitPVP.",
           Placeholder.component("name", name),
           Placeholder.unparsed("message", message)
       );
+      KitPVP.isPluginEnabled = true;
     } else if (message.equalsIgnoreCase("disable")) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "<red><bold>BROADCAST</red> <name> <dark_gray></dark_gray> has disabled KitPVP",
+          "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has disabled KitPVP",
           Placeholder.component("name", name),
           Placeholder.unparsed("message", message)
       );
     } else {
       if (source.getSender() instanceof Player player) {
-        player.sendMessage("Invalid arguments. /kitpvp <enable|disable>");
+        player.sendMessage("Invalid arguments: /kitpvp <enable|disable>");
       }
     }
 

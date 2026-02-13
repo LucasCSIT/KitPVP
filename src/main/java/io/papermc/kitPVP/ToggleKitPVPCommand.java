@@ -4,7 +4,9 @@ import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 public class ToggleKitPVPCommand implements BasicCommand {
   @Override
@@ -19,10 +21,28 @@ public class ToggleKitPVPCommand implements BasicCommand {
     }
 
     final String message = String.join(" ", args);
-    final Component toggleMessage = MiniMessage.miniMessage().deserialize(
-        ""
-    );
+    Component toggleMessage = null;
 
-    Bukkit.broadcast(toggleMessage);
+    if (message.equalsIgnoreCase("enable")) {
+      toggleMessage = MiniMessage.miniMessage().deserialize(
+          "<red><bold>BROADCAST</red> <name> <dark_gray></dark_gray> has enabled KitPVP.",
+          Placeholder.component("name", name),
+          Placeholder.unparsed("message", message)
+      );
+    } else if (message.equalsIgnoreCase("disable")) {
+      toggleMessage = MiniMessage.miniMessage().deserialize(
+          "<red><bold>BROADCAST</red> <name> <dark_gray>»</dark_gray> has disabled KitPVP",
+          Placeholder.component("name", name),
+          Placeholder.unparsed("message", message)
+      );
+    } else {
+      if (source.getSender() instanceof Player player) {
+        player.sendMessage("Invalid ");
+      }
+    }
+
+    if (null != toggleMessage) {
+      Bukkit.broadcast(toggleMessage);
+    }
   }
 }

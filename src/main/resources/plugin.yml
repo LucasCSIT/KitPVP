@@ -7,6 +7,7 @@ api: '1.21.11'
 load: STARTUP
 prefix: KitPVP
 commands:
-  enableKitPVP:
+  toggleKitPVP:
     description: Enable or disable the KitPVP plugin
     usage: /kitpvp <enable|disable>
+    aliases: [kitpvp]

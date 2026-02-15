@@ -28,10 +28,22 @@ public class KitPVP extends JavaPlugin implements Listener {
     }
 
     Player player = event.getPlayer();
-    setTankStats(player);
+    if (isFullDiamondArmor(player)) {
+      setTankStats(player);
+    }
   }
 
   private void setTankStats(Player player) {
+    player.sendMessage("Diamond armor stuff set");
+    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 1));
+    player.setSprinting(false);
+  }
+
+  private void registerCommands() {
+    registerCommand("kitpvp", new ToggleKitPVPCommand());
+  }
+
+  private boolean isFullDiamondArmor(Player player) {
     ItemStack helmet = player.getInventory().getHelmet();
     ItemStack chestplate = player.getInventory().getChestplate();
     ItemStack leggings = player.getInventory().getLeggings();
@@ -40,7 +52,7 @@ public class KitPVP extends JavaPlugin implements Listener {
 
     if (null == helmet || null == chestplate || null == leggings || null == boots) {
       player.sendMessage("Not full diamond. Returning");
-      return;
+      return false;
     }
 
     if (helmet.getType() == Material.DIAMOND_HELMET) {
@@ -56,14 +68,6 @@ public class KitPVP extends JavaPlugin implements Listener {
       diamondArmorCount++;
     }
 
-    if (diamondArmorCount == 4) {
-      player.sendMessage("Diamond armor stuff set");
-      player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 1));
-      player.setSprinting(false);
-    }
-  }
-
-  private void registerCommands() {
-    registerCommand("kitpvp", new ToggleKitPVPCommand());
+    return diamondArmorCount == 4;
   }
 }

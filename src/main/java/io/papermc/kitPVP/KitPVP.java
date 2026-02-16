@@ -47,7 +47,7 @@ public class KitPVP extends JavaPlugin implements Listener {
     ItemStack helmet = player.getInventory().getHelmet();
     ItemStack chestplate = player.getInventory().getChestplate();
     ItemStack leggings = player.getInventory().getLeggings();
-    ItemStack boots = player.getInventory().getLeggings();
+    ItemStack boots = player.getInventory().getBoots();
     int diamondArmorCount = 0;
 
     if (null == helmet || null == chestplate || null == leggings || null == boots) {

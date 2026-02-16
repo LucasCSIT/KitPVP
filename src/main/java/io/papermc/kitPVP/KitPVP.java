@@ -23,7 +23,7 @@ public class KitPVP extends JavaPlugin implements Listener {
 
   @EventHandler
   public void onPlayerIsTank(PlayerInteractEvent event) {
-    if (isPluginEnabled) {
+    if (!isPluginEnabled) {
       return;
     }
 

@@ -9,6 +9,13 @@ KitPVP is a **plugin** for Minecraft: Java Edition v1.21.11 that enables KitPVP 
 * **Five** classes to choose from
 * The ability to enable and disable KitPVP via a command
 
+### Classes
+* **Tank**: Diamond Armor with Stone Sword & Slowness II
+* **Archer**: Chainmail Armor with Wooden Sword & Bow
+* **Warrior**: Iron Armor with Iron Sword
+* **Pyro**: Leather Armor with Wooden Sword & Flint-and-Steel
+* **Mage**: Golden Armor with Gold Sword & Potions of Harming, Poison, & Slowness
+
 ## Installation
 1. Download [PaperMC v1.21.11](https://papermc.io).
 2. Download the plugin from the [official Hangar page](https://hangar.papermc.io/Sharp/Thor).

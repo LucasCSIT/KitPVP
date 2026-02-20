@@ -1,5 +1,6 @@
 # KitPVP
 KitPVP is a **plugin** for Minecraft: Java Edition v1.21.11 that enables KitPVP classes!
+**NOTE**: This plugin is currently a WIP.
 
 ## Requirements
 * Minecraft: Java Edition v1.21.11
@@ -25,7 +26,7 @@ KitPVP is a **plugin** for Minecraft: Java Edition v1.21.11 that enables KitPVP 
 5. Join the server, enter `/kitpvp enable`, and enjoy!
 
 ## Contributing
-Please feel free to create issues for any suggestions you have related to this plugin.
+Please feel free to create issues for any suggestions you have related to this plugin. They'll be reviewed and decided if the suggestion will be implemented.
 
 ## License
 This plugin is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.<br>

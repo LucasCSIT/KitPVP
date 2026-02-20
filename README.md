@@ -6,6 +6,8 @@ KitPVP is a **plugin** for Minecraft: Java Edition v1.21.11 that enables KitPVP 
 * Minecraft: Java Edition v1.21.11
 * Paper 1.21.11
 
+If you use VSCode and you see several red lines under sections of your code, it's suggested you try IntelliJ IDEA as this problem is likely solved using this IDE.
+
 ## Features
 * **Five** classes to choose from
 * The ability to enable and disable KitPVP via a command

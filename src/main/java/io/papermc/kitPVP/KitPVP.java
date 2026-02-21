@@ -19,18 +19,17 @@ public class KitPVP extends JavaPlugin implements Listener {
   public void onEnable() {
     Bukkit.getPluginManager().registerEvents(this, this);
     registerCommands();
-  }
 
-  @EventHandler
-  public void onPlayerIsTank(PlayerInteractEvent event) {
-    if (!isPluginEnabled) {
-      return;
-    }
+    Bukkit.getScheduler().runTaskTimer(this, () -> {
+      if (!isPluginEnabled) return;
 
-    Player player = event.getPlayer();
-    if (isFullDiamondArmor(player)) {
-      setTankStats(player);
-    }
+      for (Player player : Bukkit.getOnlinePlayers()) {
+        if (isFullDiamondArmor(player)) {
+          setTankStats(player);
+        } else {
+        }
+      }
+    }, 0L, 20L);
   }
 
   private void setTankStats(Player player) {

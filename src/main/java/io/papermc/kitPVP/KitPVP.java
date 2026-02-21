@@ -27,6 +27,7 @@ public class KitPVP extends JavaPlugin implements Listener {
         if (isFullDiamondArmor(player)) {
           setTankStats(player);
         } else {
+          removeTankStats(player);
         }
       }
     }, 0L, 20L);
@@ -36,6 +37,11 @@ public class KitPVP extends JavaPlugin implements Listener {
     player.sendMessage("Diamond armor stuff set");
     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 1));
     player.setSprinting(false);
+  }
+
+  private void removeTankStats(Player player) {
+    player.removePotionEffect(PotionEffectType.SLOWNESS);
+    player.setSprinting(true);
   }
 
   private void registerCommands() {

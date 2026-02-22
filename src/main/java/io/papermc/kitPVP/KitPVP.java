@@ -11,6 +11,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jspecify.annotations.NonNull;
 
 public class KitPVP extends JavaPlugin implements Listener {
   public static boolean isPluginEnabled = false;
@@ -23,14 +24,24 @@ public class KitPVP extends JavaPlugin implements Listener {
     Bukkit.getScheduler().runTaskTimer(this, () -> {
       if (!isPluginEnabled) return;
 
-      for (Player player : Bukkit.getOnlinePlayers()) {
-        if (isFullDiamondArmor(player)) {
-          setTankStats(player);
-        } else {
-          removeTankStats(player);
-        }
-      }
+      getKitType();
     }, 0L, 20L);
+  }
+
+  private void getKitType() {
+    for (Player player : Bukkit.getOnlinePlayers()) {
+      if (hasTankArmor(player)) {
+        setTankStats(player);
+      } else {
+        removeTankStats(player);
+      }
+
+      if (hasArcherArmor(player)) {
+        setArcherStats(player);
+      } else {
+        removeArcherStats(player);
+      }
+    }
   }
 
   private void setTankStats(Player player) {
@@ -43,21 +54,18 @@ public class KitPVP extends JavaPlugin implements Listener {
     player.setSprinting(true);
   }
 
-  private void registerCommands() {
-    registerCommand("kitpvp", new ToggleKitPVPCommand());
-  }
-
-  private boolean isFullDiamondArmor(Player player) {
+  private boolean hasTankArmor(Player player) {
     ItemStack helmet = player.getInventory().getHelmet();
     ItemStack chestplate = player.getInventory().getChestplate();
     ItemStack leggings = player.getInventory().getLeggings();
     ItemStack boots = player.getInventory().getBoots();
     int diamondArmorCount = 0;
 
-    if (null == helmet || null == chestplate || null == leggings || null == boots) {
-      player.sendMessage("Not full diamond. Returning");
+    if (isNotWearingProperArmor(helmet, chestplate, leggings, boots)) {
       return false;
     }
+
+    isArmorNull(helmet, chestplate, leggings, boots);
 
     if (helmet.getType() == Material.DIAMOND_HELMET) {
       diamondArmorCount++;
@@ -73,5 +81,63 @@ public class KitPVP extends JavaPlugin implements Listener {
     }
 
     return diamondArmorCount == 4;
+  }
+
+  private void setArcherStats(Player player) {
+    player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP_BOOST, 999999, 2));
+  }
+
+  private void removeArcherStats(Player player) {
+    player.removePotionEffect(PotionEffectType.JUMP_BOOST);
+  }
+
+  private boolean hasArcherArmor(@NonNull Player player) {
+    ItemStack helmet = player.getInventory().getHelmet();
+    ItemStack chestplate = player.getInventory().getChestplate();
+    ItemStack leggings = player.getInventory().getLeggings();
+    ItemStack boots = player.getInventory().getBoots();
+
+    int archerArmorCount = 0;
+
+    if (isNotWearingProperArmor(helmet, chestplate, leggings, boots)) {
+      return false;
+    }
+
+    isArmorNull(helmet, chestplate, leggings, boots);
+
+    if (helmet.getType() == Material.CHAINMAIL_HELMET) {
+      archerArmorCount++;
+    }
+    if (chestplate.getType() == Material.CHAINMAIL_CHESTPLATE) {
+      archerArmorCount++;
+    }
+    if (leggings.getType() == Material.CHAINMAIL_LEGGINGS) {
+      archerArmorCount++;
+    }
+    if (boots.getType() == Material.CHAINMAIL_BOOTS) {
+      archerArmorCount++;
+    }
+
+    return archerArmorCount == 4;
+  }
+
+  /**
+   * Returns true if the armor being worn by the player does not match any of the available kit's armor sets.
+   * @return {@code True} if an invalid armor set is worn.a
+   */
+  private boolean isNotWearingProperArmor(ItemStack helmet, ItemStack chestplate, ItemStack leggings,
+    ItemStack boots) {
+    return (null == helmet && null == chestplate && null == leggings && null == boots);
+  }
+
+  private void isArmorNull(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
+    assert null != helmet;
+    assert null != chestplate;
+    assert null != leggings;
+    assert null != boots;
+  }
+
+  private void registerCommands() {
+    registerCommand("kitpvp", new ToggleKitPVPCommand());
   }
 }

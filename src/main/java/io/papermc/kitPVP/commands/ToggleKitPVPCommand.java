@@ -8,6 +8,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jspecify.annotations.NonNull;
+
+import java.util.Collection;
+import java.util.List;
 
 public class ToggleKitPVPCommand implements BasicCommand {
   @Override
@@ -55,5 +59,14 @@ public class ToggleKitPVPCommand implements BasicCommand {
     if (null != toggleMessage) {
       Bukkit.broadcast(toggleMessage);
     }
+  }
+
+  @Override
+  public @NonNull Collection<String> suggest(@NonNull CommandSourceStack stack, String[] args) {
+    if (args.length <= 1) {
+      return List.of("enable", "disable");
+    }
+
+    return List.of();
   }
 }

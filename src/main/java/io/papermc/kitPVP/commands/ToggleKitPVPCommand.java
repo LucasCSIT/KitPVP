@@ -25,6 +25,10 @@ public class ToggleKitPVPCommand implements BasicCommand {
     Component toggleMessage = null;
 
     if (message.equalsIgnoreCase("enable")) {
+      if (KitPVP.isPluginEnabled) {
+        source.getSender().sendMessage("ERROR: KitPVP is already enabled!");
+        return;
+      }
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has enabled KitPVP.",
           Placeholder.component("name", name),
@@ -32,11 +36,16 @@ public class ToggleKitPVPCommand implements BasicCommand {
       );
       KitPVP.isPluginEnabled = true;
     } else if (message.equalsIgnoreCase("disable")) {
+      if (!KitPVP.isPluginEnabled) {
+        source.getSender().sendMessage("ERROR: KitPVP is already disabled!");
+        return;
+      }
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has disabled KitPVP",
           Placeholder.component("name", name),
           Placeholder.unparsed("message", message)
       );
+      KitPVP.isPluginEnabled = false;
     } else {
       if (source.getSender() instanceof Player player) {
         player.sendMessage("Invalid arguments: /kitpvp <enable|disable>");

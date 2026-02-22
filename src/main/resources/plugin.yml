@@ -10,4 +10,3 @@ commands:
   toggleKitPVP:
     description: Enable or disable the KitPVP plugin
     usage: /kitpvp <enable|disable>
-    aliases: [kitpvp]

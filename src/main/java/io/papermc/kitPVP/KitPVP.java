@@ -5,7 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.*;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -65,18 +64,18 @@ public class KitPVP extends JavaPlugin implements Listener {
       return false;
     }
 
-    isArmorNull(helmet, chestplate, leggings, boots);
+    assertArmorNotNull(helmet, chestplate, leggings, boots);
 
-    if (helmet.getType() == Material.DIAMOND_HELMET) {
+    if (doesArmorMatchMaterial(helmet, Material.DIAMOND_HELMET)) {
       diamondArmorCount++;
     }
-    if (chestplate.getType() == Material.DIAMOND_CHESTPLATE) {
+    if (doesArmorMatchMaterial(chestplate, Material.DIAMOND_CHESTPLATE)) {
       diamondArmorCount++;
     }
-    if (leggings.getType() == Material.DIAMOND_LEGGINGS) {
+    if (doesArmorMatchMaterial(leggings, Material.DIAMOND_LEGGINGS)) {
       diamondArmorCount++;
     }
-    if (boots.getType() == Material.DIAMOND_BOOTS) {
+    if (doesArmorMatchMaterial(boots, Material.DIAMOND_BOOTS)) {
       diamondArmorCount++;
     }
 
@@ -103,18 +102,18 @@ public class KitPVP extends JavaPlugin implements Listener {
       return false;
     }
 
-    isArmorNull(helmet, chestplate, leggings, boots);
+    assertArmorNotNull(helmet, chestplate, leggings, boots);
 
-    if (helmet.getType() == Material.CHAINMAIL_HELMET) {
+    if (doesArmorMatchMaterial(helmet, Material.CHAINMAIL_HELMET)) {
       archerArmorCount++;
     }
-    if (chestplate.getType() == Material.CHAINMAIL_CHESTPLATE) {
+    if (doesArmorMatchMaterial(chestplate, Material.CHAINMAIL_CHESTPLATE)) {
       archerArmorCount++;
     }
-    if (leggings.getType() == Material.CHAINMAIL_LEGGINGS) {
+    if (doesArmorMatchMaterial(leggings, Material.CHAINMAIL_LEGGINGS)) {
       archerArmorCount++;
     }
-    if (boots.getType() == Material.CHAINMAIL_BOOTS) {
+    if (doesArmorMatchMaterial(boots, Material.CHAINMAIL_BOOTS)) {
       archerArmorCount++;
     }
 
@@ -130,11 +129,15 @@ public class KitPVP extends JavaPlugin implements Listener {
     return (null == helmet && null == chestplate && null == leggings && null == boots);
   }
 
-  private void isArmorNull(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
+  private void assertArmorNotNull(ItemStack helmet, ItemStack chestplate, ItemStack leggings, ItemStack boots) {
     assert null != helmet;
     assert null != chestplate;
     assert null != leggings;
     assert null != boots;
+  }
+
+  private boolean doesArmorMatchMaterial(ItemStack armor, Material armorType) {
+    return armor.getType() == armorType;
   }
 
   private void registerCommands() {

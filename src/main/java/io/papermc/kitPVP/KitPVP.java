@@ -34,7 +34,6 @@ public class KitPVP extends JavaPlugin implements Listener {
   }
 
   private void setTankStats(Player player) {
-    player.sendMessage("Diamond armor stuff set");
     player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 1));
     player.setSprinting(false);
   }

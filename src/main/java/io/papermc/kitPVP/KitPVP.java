@@ -1,5 +1,6 @@
 package io.papermc.kitPVP;
 
+import io.papermc.kitPVP.commands.TankItems;
 import io.papermc.kitPVP.commands.ToggleKitPVPCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -29,57 +30,12 @@ public class KitPVP extends JavaPlugin implements Listener {
 
   private void getKitType() {
     for (Player player : Bukkit.getOnlinePlayers()) {
-      if (hasTankArmor(player)) {
-        setTankStats(player);
-      } else {
-        removeTankStats(player);
-      }
-
       if (hasArcherArmor(player)) {
         setArcherStats(player);
       } else {
         removeArcherStats(player);
       }
     }
-  }
-
-  private void setTankStats(Player player) {
-    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 1));
-    player.setSprinting(false);
-  }
-
-  private void removeTankStats(Player player) {
-    player.removePotionEffect(PotionEffectType.SLOWNESS);
-    player.setSprinting(true);
-  }
-
-  private boolean hasTankArmor(Player player) {
-    ItemStack helmet = player.getInventory().getHelmet();
-    ItemStack chestplate = player.getInventory().getChestplate();
-    ItemStack leggings = player.getInventory().getLeggings();
-    ItemStack boots = player.getInventory().getBoots();
-    int diamondArmorCount = 0;
-
-    if (isNotWearingProperArmor(helmet, chestplate, leggings, boots)) {
-      return false;
-    }
-
-    assertArmorNotNull(helmet, chestplate, leggings, boots);
-
-    if (doesArmorMatchMaterial(helmet, Material.DIAMOND_HELMET)) {
-      diamondArmorCount++;
-    }
-    if (doesArmorMatchMaterial(chestplate, Material.DIAMOND_CHESTPLATE)) {
-      diamondArmorCount++;
-    }
-    if (doesArmorMatchMaterial(leggings, Material.DIAMOND_LEGGINGS)) {
-      diamondArmorCount++;
-    }
-    if (doesArmorMatchMaterial(boots, Material.DIAMOND_BOOTS)) {
-      diamondArmorCount++;
-    }
-
-    return diamondArmorCount == 4;
   }
 
   private void setArcherStats(Player player) {
@@ -142,5 +98,6 @@ public class KitPVP extends JavaPlugin implements Listener {
 
   private void registerCommands() {
     registerCommand("kitpvp", new ToggleKitPVPCommand());
+    registerCommand("tank", new TankItems());
   }
 }

@@ -46,8 +46,7 @@ public class ToggleKitPVPCommand implements BasicCommand {
       }
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has disabled KitPVP",
-          Placeholder.component("name", name),
-          Placeholder.unparsed("message", message)
+          Placeholder.component("name", name)
       );
       KitPVP.isPluginEnabled = false;
     } else {

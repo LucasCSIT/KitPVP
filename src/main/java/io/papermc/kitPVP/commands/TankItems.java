@@ -11,20 +11,19 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.jspecify.annotations.NonNull;
 
 public class TankItems extends KitPVPArmor implements BasicCommand, KitSetup {
   boolean isTankEquipped = false;
 
   @Override
-  public void execute(CommandSourceStack source, String[] args) {
+  public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()
         ? source.getExecutor().name()
         : source.getSender().name();
 
-    if (args.length == 0) {
+    if (isCommandArgsEmpty(args)) {
       source.getSender().sendRichMessage("Missing arguments. /tank <equip|unequip>");
     }
 

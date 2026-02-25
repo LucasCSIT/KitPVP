@@ -30,7 +30,6 @@ public class TankItems implements BasicCommand {
     Player player = (Player) source.getSender();
     Component toggleMessage = null;
 
-    // TODO: Code never goes here if plugin is disabled.
     if (!KitPVP.isPluginEnabled) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] The KitPVP plugin is disabled! Enable it by typing /kitpvp enable.",

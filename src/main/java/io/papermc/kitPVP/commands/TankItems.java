@@ -1,6 +1,8 @@
 package io.papermc.kitPVP.commands;
 
 import io.papermc.kitPVP.KitPVP;
+import io.papermc.kitPVP.common.KitPVPArmor;
+import io.papermc.kitPVP.common.KitSetup;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -13,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class TankItems implements BasicCommand {
+public class TankItems extends KitPVPArmor implements BasicCommand, KitSetup {
   boolean isTankEquipped = false;
 
   @Override
@@ -29,6 +31,9 @@ public class TankItems implements BasicCommand {
     final String message = String.join(" ", args);
     Player player = (Player) source.getSender();
     Component toggleMessage = null;
+    // TODO: The code can be cleaned up a bit. Maybe find a cleaner way to store the below two lines of info?
+    PotionEffectType[] effectTypes = new PotionEffectType[1];
+    Material[] armorPieces = new Material[4];
 
     if (!KitPVP.isPluginEnabled) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
@@ -42,9 +47,14 @@ public class TankItems implements BasicCommand {
         return;
       }
       clearInventory(player);
-      setTankStats(player);
-      giveTankWeaponry(player);
-      giveTankArmor(player);
+      effectTypes[0] = PotionEffectType.SLOWNESS;
+      setStats(player, effectTypes, 2, true);
+      giveWeaponry(player, Material.STONE_SWORD);
+      armorPieces[0] = Material.DIAMOND_HELMET;
+      armorPieces[1] = Material.DIAMOND_CHESTPLATE;
+      armorPieces[2] = Material.DIAMOND_LEGGINGS;
+      armorPieces[3] = Material.DIAMOND_BOOTS;
+      giveArmor(player, armorPieces);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has equipped the <blue>Tank</blue> class.",
           Placeholder.component("name", name)
@@ -55,7 +65,7 @@ public class TankItems implements BasicCommand {
         player.sendMessage("The Tank class is unequipped already!");
         return;
       }
-      removeTankStats(player);
+      removeStats(player);
       clearInventory(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has unequipped the <blue>Tank</blue> class.",
@@ -69,30 +79,5 @@ public class TankItems implements BasicCommand {
     if (null != toggleMessage) {
       Bukkit.broadcast(toggleMessage);
     }
-  }
-
-  private void setTankStats(Player player) {
-    player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, 999999, 1));
-    player.setSprinting(false);
-  }
-
-  private void removeTankStats(Player player) {
-    player.removePotionEffect(PotionEffectType.SLOWNESS);
-    player.setSprinting(true);
-  }
-
-  private void giveTankArmor(Player player) {
-    player.getInventory().addItem(new ItemStack(Material.DIAMOND_HELMET));
-    player.getInventory().addItem(new ItemStack(Material.DIAMOND_CHESTPLATE));
-    player.getInventory().addItem(new ItemStack(Material.DIAMOND_LEGGINGS));
-    player.getInventory().addItem(new ItemStack(Material.DIAMOND_BOOTS));
-  }
-
-  private void giveTankWeaponry(Player player) {
-    player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
-  }
-
-  private void clearInventory(Player player) {
-    player.getInventory().clear();
   }
 }

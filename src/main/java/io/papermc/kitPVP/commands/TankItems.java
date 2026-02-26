@@ -55,7 +55,7 @@ public class TankItems extends KitPVPArmor implements BasicCommand, KitSetup {
       armorPieces[3] = Material.DIAMOND_BOOTS;
       giveArmor(player, armorPieces);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has equipped the <blue>Tank</blue> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <blue>Tank</blue> class.",
           Placeholder.component("name", name)
       );
       isTankEquipped = true;
@@ -67,7 +67,7 @@ public class TankItems extends KitPVPArmor implements BasicCommand, KitSetup {
       removeStats(player);
       clearInventory(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <name> <dark_gray></dark_gray> has unequipped the <blue>Tank</blue> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <blue>Tank</blue> class.",
           Placeholder.component("name", name)
       );
       isTankEquipped = false;

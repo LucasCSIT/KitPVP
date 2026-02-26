@@ -39,6 +39,7 @@ public class TankItems extends KitPVPArmor implements BasicCommand, KitSetup {
           "[<red><bold>ALERT</red>] The KitPVP plugin is disabled! Enable it by typing /kitpvp enable.",
           Placeholder.component("name", name)
       );
+      return;
     }
     if (message.equalsIgnoreCase("equip")) {
       if (isTankEquipped) {

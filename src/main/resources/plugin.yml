@@ -3,6 +3,6 @@ version: 1.0.0
 main: io.papermc.kitPVP.KitPVP
 description: A KitPVP plugin.
 author: Lucas Garcia
-api: '1.21.11'
+api-version: '1.21.11'
 load: STARTUP
 prefix: KitPVP

@@ -23,13 +23,12 @@ public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
         : source.getSender().name();
 
     if (isCommandArgsEmpty(args)) {
-      source.getSender().sendRichMessage("Missing arguments. /archer <equip|unequip>");
+      source.getSender().sendRichMessage("Missing arguments. /tank <equip|unequip>");
     }
 
     final String message = String.join(" ", args);
     Player player = (Player) source.getSender();
     Component toggleMessage = null;
-    PotionEffectType[] effectTypes = new PotionEffectType[1];
     Material[] armorPieces = new Material[4];
 
     if (!KitPVP.isPluginEnabled) {
@@ -45,36 +44,34 @@ public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
         return;
       }
       clearInventory(player);
-      effectTypes[0] = PotionEffectType.JUMP_BOOST;
-      setStats(player, effectTypes, 1, true);
       giveWeaponry(player, Material.WOODEN_SWORD);
       giveWeaponry(player, Material.BOW);
+      giveWeaponry(player, Material.ARROW);
       armorPieces[0] = Material.CHAINMAIL_HELMET;
       armorPieces[1] = Material.CHAINMAIL_CHESTPLATE;
       armorPieces[2] = Material.CHAINMAIL_LEGGINGS;
       armorPieces[3] = Material.CHAINMAIL_BOOTS;
       giveArmor(player, armorPieces);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <white><bold>Archer</white> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)
       );
       isArcherEquipped = true;
     } else if (message.equalsIgnoreCase("unequip")) {
       if (!isArcherEquipped) {
-        player.sendMessage("The Archer is already unequipped!");
+        player.sendMessage("The Archer class is unequipped already!");
         return;
       }
       removeStats(player);
       clearInventory(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <white><boldArcher</white> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)
       );
       isArcherEquipped = false;
     } else {
       player.sendMessage("Invalid arguments: /archer <equip|unequip>");
     }
-
     if (null != toggleMessage) {
       Bukkit.broadcast(toggleMessage);
     }

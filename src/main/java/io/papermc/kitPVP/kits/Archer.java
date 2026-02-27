@@ -11,13 +11,13 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
+import org.jspecify.annotations.NonNull;
 
 public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
   boolean isArcherEquipped = false;
 
   @Override
-  public void execute(CommandSourceStack source, String[] args) {
+  public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()
         ? source.getExecutor().name()
         : source.getSender().name();
@@ -36,6 +36,7 @@ public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
           "[<red><bold>ALERT</red>] The KitPVP plugin is disabled! Enable it by typing /kitpvp enable.",
           Placeholder.component("name", name)
       );
+      announce(toggleMessage);
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
@@ -44,9 +45,10 @@ public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
         return;
       }
       clearInventory(player);
+      removeStats(player);
       giveWeaponry(player, Material.WOODEN_SWORD);
       giveWeaponry(player, Material.BOW);
-      giveWeaponry(player, Material.ARROW);
+      giveWeaponry(player, Material.ARROW, 64);
       armorPieces[0] = Material.CHAINMAIL_HELMET;
       armorPieces[1] = Material.CHAINMAIL_CHESTPLATE;
       armorPieces[2] = Material.CHAINMAIL_LEGGINGS;
@@ -72,8 +74,6 @@ public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
     } else {
       player.sendMessage("Invalid arguments: /archer <equip|unequip>");
     }
-    if (null != toggleMessage) {
-      Bukkit.broadcast(toggleMessage);
-    }
+    announce(toggleMessage);
   }
 }

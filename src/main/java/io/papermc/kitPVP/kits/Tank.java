@@ -39,6 +39,7 @@ public class Tank extends KitPVPArmor implements BasicCommand, KitSetup {
           "[<red><bold>ALERT</red>] The KitPVP plugin is disabled! Enable it by typing /kitpvp enable.",
           Placeholder.component("name", name)
       );
+      announce(toggleMessage);
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
@@ -47,6 +48,7 @@ public class Tank extends KitPVPArmor implements BasicCommand, KitSetup {
         return;
       }
       clearInventory(player);
+      removeStats(player);
       effectTypes[0] = PotionEffectType.SLOWNESS;
       setStats(player, effectTypes, 2, true);
       giveWeaponry(player, Material.STONE_SWORD);
@@ -75,9 +77,6 @@ public class Tank extends KitPVPArmor implements BasicCommand, KitSetup {
     } else {
       player.sendMessage("Invalid arguments: /tank <equip|unequip>");
     }
-
-    if (null != toggleMessage) {
-      Bukkit.broadcast(toggleMessage);
-    }
+    announce(toggleMessage);
   }
 }

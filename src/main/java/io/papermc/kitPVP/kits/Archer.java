@@ -1,4 +1,4 @@
-package io.papermc.kitPVP.commands;
+package io.papermc.kitPVP.kits;
 
 import io.papermc.kitPVP.KitPVP;
 import io.papermc.kitPVP.common.KitPVPArmor;
@@ -12,25 +12,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
-import org.jspecify.annotations.NonNull;
 
-public class TankItems extends KitPVPArmor implements BasicCommand, KitSetup {
-  boolean isTankEquipped = false;
+public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
+  boolean isArcherEquipped = false;
 
   @Override
-  public void execute(CommandSourceStack source, String @NonNull [] args) {
+  public void execute(CommandSourceStack source, String[] args) {
     final Component name = null != source.getExecutor()
         ? source.getExecutor().name()
         : source.getSender().name();
 
     if (isCommandArgsEmpty(args)) {
-      source.getSender().sendRichMessage("Missing arguments. /tank <equip|unequip>");
+      source.getSender().sendRichMessage("Missing arguments. /archer <equip|unequip>");
     }
 
     final String message = String.join(" ", args);
     Player player = (Player) source.getSender();
     Component toggleMessage = null;
-    // TODO: The code can be cleaned up a bit. Maybe find a cleaner way to store the below two lines of info?
     PotionEffectType[] effectTypes = new PotionEffectType[1];
     Material[] armorPieces = new Material[4];
 
@@ -42,38 +40,39 @@ public class TankItems extends KitPVPArmor implements BasicCommand, KitSetup {
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
-      if (isTankEquipped) {
-        player.sendMessage("The Tank class is already equipped!");
+      if (isArcherEquipped) {
+        player.sendMessage("The Archer class is already equipped!");
         return;
       }
       clearInventory(player);
-      effectTypes[0] = PotionEffectType.SLOWNESS;
-      setStats(player, effectTypes, 2, true);
-      giveWeaponry(player, Material.STONE_SWORD);
-      armorPieces[0] = Material.DIAMOND_HELMET;
-      armorPieces[1] = Material.DIAMOND_CHESTPLATE;
-      armorPieces[2] = Material.DIAMOND_LEGGINGS;
-      armorPieces[3] = Material.DIAMOND_BOOTS;
+      effectTypes[0] = PotionEffectType.JUMP_BOOST;
+      setStats(player, effectTypes, 1, true);
+      giveWeaponry(player, Material.WOODEN_SWORD);
+      giveWeaponry(player, Material.BOW);
+      armorPieces[0] = Material.CHAINMAIL_HELMET;
+      armorPieces[1] = Material.CHAINMAIL_CHESTPLATE;
+      armorPieces[2] = Material.CHAINMAIL_LEGGINGS;
+      armorPieces[3] = Material.CHAINMAIL_BOOTS;
       giveArmor(player, armorPieces);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <blue>Tank</blue> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)
       );
-      isTankEquipped = true;
+      isArcherEquipped = true;
     } else if (message.equalsIgnoreCase("unequip")) {
-      if (!isTankEquipped) {
-        player.sendMessage("The Tank class is unequipped already!");
+      if (!isArcherEquipped) {
+        player.sendMessage("The Archer is already unequipped!");
         return;
       }
       removeStats(player);
       clearInventory(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <blue>Tank</blue> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <white><boldArcher</white> class.",
           Placeholder.component("name", name)
       );
-      isTankEquipped = false;
+      isArcherEquipped = false;
     } else {
-      player.sendMessage("Invalid arguments: /tank <equip|unequip>");
+      player.sendMessage("Invalid arguments: /archer <equip|unequip>");
     }
 
     if (null != toggleMessage) {

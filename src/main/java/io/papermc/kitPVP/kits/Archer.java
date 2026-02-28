@@ -14,8 +14,6 @@ import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 
 public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
-  boolean isArcherEquipped = false;
-
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()
@@ -40,10 +38,6 @@ public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
-      if (isArcherEquipped) {
-        player.sendMessage("The Archer class is already equipped!");
-        return;
-      }
       clearInventory(player);
       removeStats(player);
       giveWeaponry(player, Material.WOODEN_SWORD);
@@ -58,19 +52,13 @@ public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)
       );
-      isArcherEquipped = true;
     } else if (message.equalsIgnoreCase("unequip")) {
-      if (!isArcherEquipped) {
-        player.sendMessage("The Archer class is unequipped already!");
-        return;
-      }
       removeStats(player);
       clearInventory(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)
       );
-      isArcherEquipped = false;
     } else {
       player.sendMessage("Invalid arguments: /archer <equip|unequip>");
     }

@@ -15,8 +15,6 @@ import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
 public class Tank extends KitPVPArmor implements BasicCommand, KitSetup {
-  boolean isTankEquipped = false;
-
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()
@@ -43,10 +41,6 @@ public class Tank extends KitPVPArmor implements BasicCommand, KitSetup {
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
-      if (isTankEquipped) {
-        player.sendMessage("The Tank class is already equipped!");
-        return;
-      }
       clearInventory(player);
       removeStats(player);
       effectTypes[0] = PotionEffectType.SLOWNESS;
@@ -58,22 +52,16 @@ public class Tank extends KitPVPArmor implements BasicCommand, KitSetup {
       armorPieces[3] = Material.DIAMOND_BOOTS;
       giveArmor(player, armorPieces);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <blue>Tank</blue> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <blue><bold>Tank</blue> class.",
           Placeholder.component("name", name)
       );
-      isTankEquipped = true;
     } else if (message.equalsIgnoreCase("unequip")) {
-      if (!isTankEquipped) {
-        player.sendMessage("The Tank class is unequipped already!");
-        return;
-      }
       removeStats(player);
       clearInventory(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <blue>Tank</blue> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <blue><bold>Tank</blue> class.",
           Placeholder.component("name", name)
       );
-      isTankEquipped = false;
     } else {
       player.sendMessage("Invalid arguments: /tank <equip|unequip>");
     }

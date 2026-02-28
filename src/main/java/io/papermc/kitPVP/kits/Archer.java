@@ -1,19 +1,18 @@
 package io.papermc.kitPVP.kits;
 
 import io.papermc.kitPVP.KitPVP;
-import io.papermc.kitPVP.common.KitPVPArmor;
+import io.papermc.kitPVP.common.Kit;
 import io.papermc.kitPVP.common.KitSetup;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 
-public class Archer extends KitPVPArmor implements BasicCommand, KitSetup {
+public class Archer extends Kit implements BasicCommand, KitSetup {
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()

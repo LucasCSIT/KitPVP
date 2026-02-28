@@ -8,7 +8,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public abstract class KitPVPArmor {
+import java.util.List;
+
+public abstract class Kit {
+  protected void equipKit(Player player, List<Material> armor, List<Material> weapons) {
+    clearInventory(player);
+    removeStats(player);
+    for (Material m : armor) {
+      giveArmor(player, m);
+    }
+    for (Material m : weapons) {
+      giveWeaponry(player, m);
+    }
+  }
+
   protected void giveWeaponry(Player player, Material weapon) {
     player.getInventory().addItem(new ItemStack(weapon));
   }
@@ -17,10 +30,8 @@ public abstract class KitPVPArmor {
     player.getInventory().addItem(new ItemStack(weapon, quantity));
   }
 
-  protected void giveArmor(Player player, Material[] armor) {
-    for (Material armorPiece : armor) {
-      player.getInventory().addItem(new ItemStack(armorPiece));
-    }
+  protected void giveArmor(Player player, Material armor) {
+    player.getInventory().addItem(new ItemStack(armor));
   }
 
   protected void setStats(Player player, PotionEffectType[] effects, int effectLevel, boolean cannotSprint) {

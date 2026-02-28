@@ -8,10 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.List;
-
 public abstract class Kit {
-  protected void equipKit(Player player, List<Material> armor, List<Material> weapons) {
+  protected void equipKit(Player player, Material[] armor, Material[] weapons) {
     clearInventory(player);
     removeStats(player);
     for (Material m : armor) {

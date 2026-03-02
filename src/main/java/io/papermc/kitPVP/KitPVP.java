@@ -3,6 +3,7 @@ package io.papermc.kitPVP;
 import io.papermc.kitPVP.kits.Archer;
 import io.papermc.kitPVP.kits.Tank;
 import io.papermc.kitPVP.commands.ToggleKitPVPCommand;
+import io.papermc.kitPVP.kits.Warrior;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -100,5 +101,6 @@ public class KitPVP extends JavaPlugin implements Listener {
     registerCommand("kitpvp", new ToggleKitPVPCommand());
     registerCommand("tank", new Tank());
     registerCommand("archer", new Archer());
+    registerCommand("warrior", new Warrior());
   }
 }

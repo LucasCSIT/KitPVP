@@ -9,30 +9,34 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public abstract class Kit {
-  protected void equipKit(Player player, Material[] armor, Material[] weapons) {
+  protected void equipKit(Player player, Material[] armor, Material[] weapons, boolean doGetQuantityWeapons) {
     clearInventory(player);
     removeStats(player);
     for (Material m : armor) {
       giveArmor(player, m);
     }
     for (Material m : weapons) {
+      if (m == Material.ARROW) {
+        giveWeaponry(player, m, 64);
+        continue;
+      }
       giveWeaponry(player, m);
     }
   }
 
-  protected void giveWeaponry(Player player, Material weapon) {
+  private void giveWeaponry(Player player, Material weapon) {
     player.getInventory().addItem(new ItemStack(weapon));
   }
 
-  protected void giveWeaponry(Player player, Material weapon, int quantity) {
+  private void giveWeaponry(Player player, Material weapon, int quantity) {
     player.getInventory().addItem(new ItemStack(weapon, quantity));
   }
 
-  protected void giveArmor(Player player, Material armor) {
+  private void giveArmor(Player player, Material armor) {
     player.getInventory().addItem(new ItemStack(armor));
   }
 
-  protected void setStats(Player player, PotionEffectType[] effects, int effectLevel, boolean cannotSprint) {
+  private void setStats(Player player, PotionEffectType[] effects, int effectLevel, boolean cannotSprint) {
     for (PotionEffectType effect : effects) {
       player.addPotionEffect(new PotionEffect(effect, Integer.MAX_VALUE, effectLevel));
     }

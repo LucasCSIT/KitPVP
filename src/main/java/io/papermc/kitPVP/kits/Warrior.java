@@ -1,7 +1,7 @@
 package io.papermc.kitPVP.kits;
 
 import io.papermc.kitPVP.KitPVP;
-import io.papermc.kitPVP.common.KitPVPArmor;
+import io.papermc.kitPVP.common.Kit;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -12,7 +12,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-public class Warrior extends KitPVPArmor implements BasicCommand {
+public class Warrior extends Kit implements BasicCommand {
+  Material[] armor = new Material[4];
+  Material[] weapons = new Material[1];
+
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()
@@ -23,13 +26,9 @@ public class Warrior extends KitPVPArmor implements BasicCommand {
       source.getSender().sendRichMessage("Missing arguments. /warrior <equip|unequip>");
     }
 
-
     final String message = String.join(" ", args);
     Player player = (Player) source.getSender();
     Component toggleMessage = null;
-    // TODO: The code can be cleaned up a bit. Maybe find a cleaner way to store the below two lines of info?
-    PotionEffectType[] effectTypes = new PotionEffectType[1];
-    Material[] armorPieces = new Material[4];
 
     if (!KitPVP.isPluginEnabled) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
@@ -40,15 +39,9 @@ public class Warrior extends KitPVPArmor implements BasicCommand {
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
-      clearInventory(player);
-      removeStats(player);
-      setStats(player, effectTypes, 2, true);
-      giveWeaponry(player, Material.STONE_SWORD);
-      armorPieces[0] = Material.IRON_HELMET;
-      armorPieces[1] = Material.IRON_CHESTPLATE;
-      armorPieces[2] = Material.IRON_LEGGINGS;
-      armorPieces[3] = Material.IRON_BOOTS;
-      giveArmor(player, armorPieces);
+      setArmor();
+      setWeapons();
+      equipKit(player, armor, weapons);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <grey><bold>Warrior</grey> class.",
           Placeholder.component("name", name)
@@ -64,5 +57,16 @@ public class Warrior extends KitPVPArmor implements BasicCommand {
       player.sendMessage("Invalid arguments: /warrior <equip|unequip>");
     }
     announce(toggleMessage);
+  }
+
+  private void setArmor() {
+    armor[0] = Material.IRON_HELMET;
+    armor[1] = Material.IRON_CHESTPLATE;
+    armor[2] = Material.IRON_LEGGINGS;
+    armor[3] = Material.IRON_BOOTS;
+  }
+
+  private void setWeapons() {
+    weapons[0] = Material.STONE_SWORD;
   }
 }

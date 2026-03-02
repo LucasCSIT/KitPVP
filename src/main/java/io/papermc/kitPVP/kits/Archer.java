@@ -13,6 +13,9 @@ import org.bukkit.entity.Player;
 import org.jspecify.annotations.NonNull;
 
 public class Archer extends Kit implements BasicCommand, KitSetup {
+  Material[] armor = new Material[4];
+  Material[] weapons = new Material[4];
+
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()
@@ -20,13 +23,12 @@ public class Archer extends Kit implements BasicCommand, KitSetup {
         : source.getSender().name();
 
     if (isCommandArgsEmpty(args)) {
-      source.getSender().sendRichMessage("Missing arguments. /tank <equip|unequip>");
+      source.getSender().sendRichMessage("Missing arguments. /archer <equip|unequip>");
     }
 
     final String message = String.join(" ", args);
     Player player = (Player) source.getSender();
     Component toggleMessage = null;
-    Material[] armorPieces = new Material[4];
 
     if (!KitPVP.isPluginEnabled) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
@@ -37,16 +39,9 @@ public class Archer extends Kit implements BasicCommand, KitSetup {
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
-      clearInventory(player);
-      removeStats(player);
-      giveWeaponry(player, Material.WOODEN_SWORD);
-      giveWeaponry(player, Material.BOW);
-      giveWeaponry(player, Material.ARROW, 64);
-      armorPieces[0] = Material.CHAINMAIL_HELMET;
-      armorPieces[1] = Material.CHAINMAIL_CHESTPLATE;
-      armorPieces[2] = Material.CHAINMAIL_LEGGINGS;
-      armorPieces[3] = Material.CHAINMAIL_BOOTS;
-      giveArmor(player, armorPieces);
+      setArmor();
+      setWeapons();
+      equipKit(player, armor, weapons, true);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)
@@ -62,5 +57,18 @@ public class Archer extends Kit implements BasicCommand, KitSetup {
       player.sendMessage("Invalid arguments: /archer <equip|unequip>");
     }
     announce(toggleMessage);
+  }
+
+  private void setArmor() {
+    armor[0] = Material.CHAINMAIL_HELMET;
+    armor[1] = Material.CHAINMAIL_CHESTPLATE;
+    armor[2] = Material.CHAINMAIL_LEGGINGS;
+    armor[3] = Material.CHAINMAIL_BOOTS;
+  }
+
+  private void setWeapons() {
+    weapons[0] = Material.BOW;
+    weapons[1] = Material.WOODEN_SWORD;
+    weapons[2] = Material.ARROW;
   }
 }

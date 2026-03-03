@@ -14,6 +14,9 @@ import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
 public class Tank extends Kit implements BasicCommand, KitSetup {
+  Material[] armor = new Material[4];
+  Material[] weapons = new Material[1];
+
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
     final Component name = null != source.getExecutor()
@@ -42,14 +45,9 @@ public class Tank extends Kit implements BasicCommand, KitSetup {
     if (message.equalsIgnoreCase("equip")) {
       clearInventory(player);
       removeStats(player);
-      effectTypes[0] = PotionEffectType.SLOWNESS;
-      setStats(player, effectTypes, 2, true);
-      giveWeaponry(player, Material.STONE_SWORD);
-      armorPieces[0] = Material.DIAMOND_HELMET;
-      armorPieces[1] = Material.DIAMOND_CHESTPLATE;
-      armorPieces[2] = Material.DIAMOND_LEGGINGS;
-      armorPieces[3] = Material.DIAMOND_BOOTS;
-      giveArmor(player, armorPieces);
+      setArmor();
+      setWeapons();
+      equipKit(player, armor, weapons, false);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <blue><bold>Tank</blue> class.",
           Placeholder.component("name", name)
@@ -65,5 +63,16 @@ public class Tank extends Kit implements BasicCommand, KitSetup {
       player.sendMessage("Invalid arguments: /tank <equip|unequip>");
     }
     announce(toggleMessage);
+  }
+
+  private void setArmor() {
+    armor[0] = Material.DIAMOND_HELMET;
+    armor[1] = Material.DIAMOND_CHESTPLATE;
+    armor[2] = Material.DIAMOND_LEGGINGS;
+    armor[3] = Material.DIAMOND_BOOTS;
+  }
+
+  private void setWeapons() {
+    weapons[0] = Material.STONE_SWORD;
   }
 }

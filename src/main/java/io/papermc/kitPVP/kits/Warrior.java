@@ -39,9 +39,11 @@ public class Warrior extends Kit implements BasicCommand {
       return;
     }
     if (message.equalsIgnoreCase("equip")) {
+      clearInventory(player);
+      removeStats(player);
       setArmor();
       setWeapons();
-      equipKit(player, armor, weapons);
+      equipKit(player, armor, weapons, false);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <grey><bold>Warrior</grey> class.",
           Placeholder.component("name", name)

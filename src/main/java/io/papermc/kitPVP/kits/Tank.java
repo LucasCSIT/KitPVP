@@ -10,6 +10,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
@@ -47,6 +48,7 @@ public class Tank extends Kit implements BasicCommand, KitSetup {
       removeStats(player);
       setArmor();
       setWeapons();
+      player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 2));
       equipKit(player, armor, weapons, false);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <blue><bold>Tank</blue> class.",

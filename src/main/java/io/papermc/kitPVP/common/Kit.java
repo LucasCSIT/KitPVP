@@ -9,7 +9,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public abstract class Kit {
-  protected void equipKit(Player player, Material[] armor, Material[] weapons, boolean doGetQuantityWeapons) {
+  protected void equipKit(Player player, Material[] armor, Material[] weapons, PotionEffectType[] potionEffects, boolean canSprint) {
     clearInventory(player);
     removeStats(player);
     for (Material m : armor) {
@@ -17,10 +17,18 @@ public abstract class Kit {
     }
     for (Material m : weapons) {
       if (m == Material.ARROW) {
+        // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the material and the desired quantity.
         giveWeaponry(player, m, 64);
         continue;
       }
       giveWeaponry(player, m);
+    }
+    if (null != potionEffects) {
+      // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the potion effect and the desired level.
+        setStats(player, potionEffects, 1);
+    }
+    if (!canSprint) {
+      player.setSprinting(false);
     }
   }
 
@@ -36,12 +44,9 @@ public abstract class Kit {
     player.getInventory().addItem(new ItemStack(armor));
   }
 
-  private void setStats(Player player, PotionEffectType[] effects, int effectLevel, boolean cannotSprint) {
+  private void setStats(Player player, PotionEffectType[] effects, int effectLevel) {
     for (PotionEffectType effect : effects) {
       player.addPotionEffect(new PotionEffect(effect, Integer.MAX_VALUE, effectLevel));
-    }
-    if (cannotSprint) {
-      player.setSprinting(false);
     }
   }
 

@@ -9,13 +9,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
 public class Tank extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   Material[] weapons = new Material[1];
+  PotionEffectType[] potionEffects = new PotionEffectType[1];
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -30,9 +30,6 @@ public class Tank extends Kit implements BasicCommand {
     final String message = String.join(" ", args);
     Player player = (Player) source.getSender();
     Component toggleMessage = null;
-    // TODO: The code can be cleaned up a bit. Maybe find a cleaner way to store the below two lines of info?
-    PotionEffectType[] effectTypes = new PotionEffectType[1];
-    Material[] armorPieces = new Material[4];
 
     if (!KitPVP.isPluginEnabled) {
       toggleMessage = MiniMessage.miniMessage().deserialize(
@@ -47,8 +44,8 @@ public class Tank extends Kit implements BasicCommand {
       removeStats(player);
       setArmor();
       setWeapons();
-      player.addPotionEffect(new PotionEffect(PotionEffectType.SLOWNESS, Integer.MAX_VALUE, 2));
-      equipKit(player, armor, weapons, false);
+      setPotionEffects();
+      equipKit(player, armor, weapons, potionEffects, false);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <blue><bold>Tank</blue> class.",
           Placeholder.component("name", name)
@@ -75,5 +72,9 @@ public class Tank extends Kit implements BasicCommand {
 
   private void setWeapons() {
     weapons[0] = Material.STONE_SWORD;
+  }
+
+  private void setPotionEffects() {
+    potionEffects[0] = PotionEffectType.SLOWNESS;
   }
 }

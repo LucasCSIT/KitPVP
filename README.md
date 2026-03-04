@@ -14,7 +14,7 @@ If you use VSCode and you see several red lines under sections of your code, it'
 
 ### Classes
 Any breakable part of a kit (i.e. armor, weapons) will have Unbreaking applied.
-* **Tank**: Diamond Armor with Stone Sword & Slowness II
+* **Tank**: Diamond Armor with Stone Sword & Slowness I
 * **Archer**: Chainmail Armor with Wooden Sword & Bow & Leaping II
 * **Warrior**: Iron Armor with Iron Sword
 * **Pyro**: Leather Armor with Wooden Sword & Flint-and-Steel

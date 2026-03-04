@@ -2,7 +2,6 @@ package io.papermc.kitPVP.kits;
 
 import io.papermc.kitPVP.KitPVP;
 import io.papermc.kitPVP.common.Kit;
-import io.papermc.kitPVP.common.KitSetup;
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import net.kyori.adventure.text.Component;
@@ -14,7 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
-public class Tank extends Kit implements BasicCommand, KitSetup {
+public class Tank extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   Material[] weapons = new Material[1];
 

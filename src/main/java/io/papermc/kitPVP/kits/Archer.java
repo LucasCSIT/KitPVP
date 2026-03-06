@@ -9,11 +9,13 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
 public class Archer extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   Material[] weapons = new Material[4];
+  PotionEffectType[] potionEffectTypes = new PotionEffectType[0];
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -40,7 +42,7 @@ public class Archer extends Kit implements BasicCommand {
     if (message.equalsIgnoreCase("equip")) {
       setArmor();
       setWeapons();
-      equipKit(player, armor, weapons, true);
+      equipKit(player, armor, weapons, potionEffectTypes, true);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)

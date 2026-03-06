@@ -23,7 +23,7 @@ public abstract class Kit {
       }
       giveWeaponry(player, m);
     }
-    if (null != potionEffects) {
+    if (potionEffects.length > 0) {
       // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the potion effect and the desired level.
         setStats(player, potionEffects, 1);
     }

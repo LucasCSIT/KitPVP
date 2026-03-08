@@ -15,6 +15,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 public class Warrior extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   Material[] weapons = new Material[1];
+  PotionEffectType[] potionEffectTypes = new PotionEffectType[0];
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -43,7 +44,7 @@ public class Warrior extends Kit implements BasicCommand {
       removeStats(player);
       setArmor();
       setWeapons();
-      equipKit(player, armor, weapons, false);
+      equipKit(player, armor, weapons, potionEffectTypes, false);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <grey><bold>Warrior</grey> class.",
           Placeholder.component("name", name)

@@ -11,6 +11,7 @@ If you use VSCode and you see several red lines under sections of your code, it'
 ## Features
 * **Five** classes to choose from
 * The ability to enable and disable KitPVP via a command
+* The ability to equip and unequip a class via a command
 
 ### Classes
 Any breakable part of a kit (i.e. armor, weapons) will have Unbreaking applied.
@@ -32,4 +33,4 @@ Any breakable part of a kit (i.e. armor, weapons) will have Unbreaking applied.
 Please feel free to create issues for any suggestions you have related to this plugin. They'll be reviewed and decided if the suggestion will be implemented.
 
 ## License
-This plugin is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.<br>
+This plugin is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.

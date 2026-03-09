@@ -9,6 +9,25 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public abstract class Kit {
+  protected void equipKit(Player player, Material[] armor, Material[] weapons, boolean canSprint) {
+    clearInventory(player);
+    removeStats(player);
+    for (Material m : armor) {
+      giveArmor(player, m);
+    }
+    for (Material m : weapons) {
+      if (m == Material.ARROW) {
+        // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the material and the desired quantity.
+        giveWeaponry(player, m, 64);
+        continue;
+      }
+      giveWeaponry(player, m);
+    }
+    if (!canSprint) {
+      player.setSprinting(false);
+    }
+  }
+
   protected void equipKit(Player player, Material[] armor, Material[] weapons, PotionEffectType[] potionEffects, boolean canSprint) {
     clearInventory(player);
     removeStats(player);
@@ -25,7 +44,7 @@ public abstract class Kit {
     }
     if (potionEffects.length > 0) {
       // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the potion effect and the desired level.
-        setStats(player, potionEffects, 1);
+      setStats(player, potionEffects, 1);
     }
     if (!canSprint) {
       player.setSprinting(false);

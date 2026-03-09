@@ -15,7 +15,6 @@ import org.jspecify.annotations.NonNull;
 public class Pyro extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   Material[] weapons = new Material[4];
-  PotionEffectType[] potionEffectTypes = new PotionEffectType[0];
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -42,7 +41,7 @@ public class Pyro extends Kit implements BasicCommand {
     if (message.equalsIgnoreCase("equip")) {
       setArmor();
       setWeapons();
-      equipKit(player, armor, weapons, potionEffectTypes, true);
+      equipKit(player, armor, weapons, true);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <orange><bold>Pyro</orange> class.",
           Placeholder.component("name", name)

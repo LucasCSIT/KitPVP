@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class Pyro extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   HashMap<Material, Integer> weapons = new HashMap<>();
+  HashMap<PotionEffectType, Integer> potionEffects = new HashMap<>();
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -43,7 +44,7 @@ public class Pyro extends Kit implements BasicCommand {
     if (message.equalsIgnoreCase("equip")) {
       setArmor();
       setWeapons();
-      equipKit(player, armor, weapons, true);
+      equipKit(player, armor, weapons, potionEffects, true);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <orange><bold>Pyro</orange> class.",
           Placeholder.component("name", name)

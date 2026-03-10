@@ -15,8 +15,9 @@ import org.jspecify.annotations.NonNull;
 import java.util.HashMap;
 
 public class Archer extends Kit implements BasicCommand {
-  HashMap<Material, Integer> weapons = new HashMap<>();
   Material[] armor = new Material[4];
+  HashMap<Material, Integer> weapons = new HashMap<>();
+  HashMap<PotionEffectType, Integer> potionEffects = new HashMap<>();
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -43,7 +44,8 @@ public class Archer extends Kit implements BasicCommand {
     if (message.equalsIgnoreCase("equip")) {
       setArmor();
       setWeapons();
-      equipKit(player, armor, weapons,true);
+      setPotionEffects();
+      equipKit(player, armor, weapons, potionEffects, true);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <white><bold>Archer</white> class.",
           Placeholder.component("name", name)
@@ -72,5 +74,9 @@ public class Archer extends Kit implements BasicCommand {
     weapons.put(Material.BOW, 1);
     weapons.put(Material.WOODEN_SWORD, 1);
     weapons.put(Material.ARROW, 64);
+  }
+
+  private void setPotionEffects() {
+    potionEffects.put(PotionEffectType.JUMP_BOOST, 1);
   }
 }

@@ -17,7 +17,7 @@ import java.util.HashMap;
 public class Tank extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   HashMap<Material, Integer> weapons = new HashMap<>();
-  PotionEffectType[] potionEffects = new PotionEffectType[1];
+  HashMap<PotionEffectType, Integer> potionEffects = new HashMap<>();
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -77,6 +77,6 @@ public class Tank extends Kit implements BasicCommand {
   }
 
   private void setPotionEffects() {
-    potionEffects[0] = PotionEffectType.SLOWNESS;
+    potionEffects.put(PotionEffectType.SLOWNESS, 1);
   }
 }

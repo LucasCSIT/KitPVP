@@ -17,6 +17,7 @@ import java.util.HashMap;
 public class Warrior extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
   HashMap<Material, Integer> weapons = new HashMap<>();
+  HashMap<PotionEffectType, Integer> potionEffects = new HashMap<>();
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -45,7 +46,7 @@ public class Warrior extends Kit implements BasicCommand {
       removeStats(player);
       setArmor();
       setWeapons();
-      equipKit(player, armor, weapons, false);
+      equipKit(player, armor, weapons, potionEffects, false);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <grey><bold>Warrior</grey> class.",
           Placeholder.component("name", name)

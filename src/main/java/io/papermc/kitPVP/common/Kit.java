@@ -12,30 +12,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Kit {
-  protected void equipKit(Player player, Material[] armor, HashMap<Material, Integer> weapons, boolean canSprint) {
+  protected void equipKit(Player player, Material[] armor, HashMap<Material, Integer> weapons, HashMap<PotionEffectType, Integer> potionEffects, boolean canSprint) {
     clearInventory(player);
     removeStats(player);
     for (Material m : armor) {
       giveArmor(player, m);
     }
-    for (Map.Entry<Material, Integer> m : weapons.entrySet()) {
-      giveWeaponry(player, m.getKey(), m.getValue());
+    for (Map.Entry<Material, Integer> weapon : weapons.entrySet()) {
+      giveWeaponry(player, weapon.getKey(), weapon.getValue());
     }
-    setSprinting(player, canSprint);
-  }
-
-  protected void equipKit(Player player, Material[] armor, HashMap<Material, Integer> weapons, PotionEffectType[] potionEffects, boolean canSprint) {
-    clearInventory(player);
-    removeStats(player);
-    for (Material m : armor) {
-      giveArmor(player, m);
-    }
-    for (Map.Entry<Material, Integer> m : weapons.entrySet()) {
-      giveWeaponry(player, m.getKey(), m.getValue());
-    }
-    if (potionEffects.length > 0) {
-      // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the potion effect and the desired level.
-      setStats(player, potionEffects, 1);
+    if (!potionEffects.isEmpty()) {
+      setStats(player, potionEffects);
     }
     setSprinting(player, canSprint);
   }
@@ -48,9 +35,9 @@ public abstract class Kit {
     player.getInventory().addItem(new ItemStack(armor));
   }
 
-  private void setStats(Player player, PotionEffectType[] effects, int effectLevel) {
-    for (PotionEffectType effect : effects) {
-      player.addPotionEffect(new PotionEffect(effect, Integer.MAX_VALUE, effectLevel));
+  private void setStats(Player player, HashMap<PotionEffectType, Integer> potionEffects) {
+    for (Map.Entry<PotionEffectType, Integer> potionEffect : potionEffects.entrySet()) {
+      player.addPotionEffect(new PotionEffect(potionEffect.getKey(), Integer.MAX_VALUE, potionEffect.getValue()));
     }
   }
 

@@ -12,9 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
+import java.util.HashMap;
+
 public class Pyro extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
-  Material[] weapons = new Material[4];
+  HashMap<Material, Integer> weapons = new HashMap<>();
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -67,7 +69,7 @@ public class Pyro extends Kit implements BasicCommand {
   }
 
   private void setWeapons() {
-    weapons[1] = Material.WOODEN_SWORD;
-    weapons[2] = Material.FLINT_AND_STEEL;
+    weapons.put(Material.WOODEN_SWORD, 1);
+    weapons.put(Material.FLINT_AND_STEEL, 1);
   }
 }

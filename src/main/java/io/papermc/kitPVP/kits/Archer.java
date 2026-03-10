@@ -12,9 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
+import java.util.HashMap;
+
 public class Archer extends Kit implements BasicCommand {
+  HashMap<Material, Integer> weapons = new HashMap<>();
   Material[] armor = new Material[4];
-  Material[] weapons = new Material[4];
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -67,8 +69,8 @@ public class Archer extends Kit implements BasicCommand {
   }
 
   private void setWeapons() {
-    weapons[0] = Material.BOW;
-    weapons[1] = Material.WOODEN_SWORD;
-    weapons[2] = Material.ARROW;
+    weapons.put(Material.BOW, 1);
+    weapons.put(Material.WOODEN_SWORD, 1);
+    weapons.put(Material.ARROW, 64);
   }
 }

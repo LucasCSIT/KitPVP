@@ -8,54 +8,39 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Kit {
-  protected void equipKit(Player player, Material[] armor, Material[] weapons, boolean canSprint) {
+  protected void equipKit(Player player, Material[] armor, HashMap<Material, Integer> weapons, boolean canSprint) {
     clearInventory(player);
     removeStats(player);
     for (Material m : armor) {
       giveArmor(player, m);
     }
-    for (Material m : weapons) {
-      if (m == Material.ARROW) {
-        // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the material and the desired quantity.
-        giveWeaponry(player, m, 64);
-        continue;
-      }
-      giveWeaponry(player, m);
+    for (Map.Entry<Material, Integer> m : weapons.entrySet()) {
+      giveWeaponry(player, m.getKey(), m.getValue());
     }
-    if (!canSprint) {
-      player.setSprinting(false);
-    }
+    setSprinting(player, canSprint);
   }
 
-  protected void equipKit(Player player, Material[] armor, Material[] weapons, PotionEffectType[] potionEffects, boolean canSprint) {
+  protected void equipKit(Player player, Material[] armor, HashMap<Material, Integer> weapons, PotionEffectType[] potionEffects, boolean canSprint) {
     clearInventory(player);
     removeStats(player);
     for (Material m : armor) {
       giveArmor(player, m);
     }
-    for (Material m : weapons) {
-      if (m == Material.ARROW) {
-        // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the material and the desired quantity.
-        giveWeaponry(player, m, 64);
-        continue;
-      }
-      giveWeaponry(player, m);
+    for (Map.Entry<Material, Integer> m : weapons.entrySet()) {
+      giveWeaponry(player, m.getKey(), m.getValue());
     }
     if (potionEffects.length > 0) {
       // TODO: This is hardcoded right now. Figure out how to make this not hard-coded. Likely need a map for the potion effect and the desired level.
       setStats(player, potionEffects, 1);
     }
-    if (!canSprint) {
-      player.setSprinting(false);
-    }
+    setSprinting(player, canSprint);
   }
 
-  private void giveWeaponry(Player player, Material weapon) {
-    player.getInventory().addItem(new ItemStack(weapon));
-  }
-
-  private void giveWeaponry(Player player, Material weapon, int quantity) {
+  private void giveWeaponry(Player player, Material weapon, Integer quantity) {
     player.getInventory().addItem(new ItemStack(weapon, quantity));
   }
 
@@ -74,6 +59,10 @@ public abstract class Kit {
       player.removePotionEffect(effect.getType());
     }
     player.setSprinting(true);
+  }
+
+  private void setSprinting(Player player, boolean canSprint) {
+    player.setSprinting(canSprint);
   }
 
   protected void clearInventory(Player player) {

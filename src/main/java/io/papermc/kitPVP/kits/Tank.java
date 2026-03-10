@@ -12,9 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.jspecify.annotations.NonNull;
 
+import java.util.HashMap;
+
 public class Tank extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
-  Material[] weapons = new Material[1];
+  HashMap<Material, Integer> weapons = new HashMap<>();
   PotionEffectType[] potionEffects = new PotionEffectType[1];
 
   @Override
@@ -71,7 +73,7 @@ public class Tank extends Kit implements BasicCommand {
   }
 
   private void setWeapons() {
-    weapons[0] = Material.STONE_SWORD;
+    weapons.put(Material.STONE_SWORD, 1);
   }
 
   private void setPotionEffects() {

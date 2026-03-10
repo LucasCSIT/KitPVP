@@ -12,9 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.HashMap;
+
 public class Warrior extends Kit implements BasicCommand {
   Material[] armor = new Material[4];
-  Material[] weapons = new Material[1];
+  HashMap<Material, Integer> weapons = new HashMap<>();
 
   @Override
   public void execute(CommandSourceStack source, String @NonNull [] args) {
@@ -69,6 +71,6 @@ public class Warrior extends Kit implements BasicCommand {
   }
 
   private void setWeapons() {
-    weapons[0] = Material.STONE_SWORD;
+    weapons.put(Material.STONE_SWORD, 1);
   }
 }

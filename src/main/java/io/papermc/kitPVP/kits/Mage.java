@@ -9,7 +9,10 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.HashMap;
@@ -45,6 +48,8 @@ public class Mage extends Kit implements BasicCommand {
       setArmor();
       setWeapons();
       equipKit(player, armor, weapons, potionEffects, true);
+      giveDrinkablePotions(player);
+      giveSplashPotions(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
           "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has equipped the <yellow><bold>Mage</yellow> class.",
           Placeholder.component("name", name)
@@ -53,7 +58,7 @@ public class Mage extends Kit implements BasicCommand {
       removeStats(player);
       clearInventory(player);
       toggleMessage = MiniMessage.miniMessage().deserialize(
-          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <yellow><bold>Archer</yellow> class.",
+          "[<red><bold>ALERT</red>] <dark_gray><name></dark_gray> has unequipped the <yellow><bold>Mage</yellow> class.",
           Placeholder.component("name", name)
       );
     } else {
@@ -71,5 +76,45 @@ public class Mage extends Kit implements BasicCommand {
 
   private void setWeapons() {
     weapons.put(Material.GOLDEN_SWORD, 1);
+  }
+
+  // TODO: Put this in Kit.java so other kits can utilize this
+  private void giveDrinkablePotions(Player player) {
+    ItemStack potion = new ItemStack(Material.POTION);
+    PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
+
+    potionMeta.setBasePotionType(PotionType.HEALING);
+    potion.setItemMeta(potionMeta);
+    player.getInventory().addItem(potion);
+
+    potionMeta.setBasePotionType(PotionType.STRENGTH);
+    potion.setItemMeta(potionMeta);
+    player.getInventory().addItem(potion);
+  }
+
+  // TODO: Put this in Kit.java so other kits can utilize this
+  private void giveSplashPotions(Player player) {
+    ItemStack potion = new ItemStack(Material.SPLASH_POTION);
+    PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
+
+    for (int i = 0; i < 2; i++) {
+      potionMeta.setBasePotionType(PotionType.HARMING);
+      potion.setItemMeta(potionMeta);
+      player.getInventory().addItem(potion);
+    }
+
+    for (int i = 0; i < 2; i++) {
+      potionMeta.setBasePotionType(PotionType.WEAKNESS);
+      potion.setItemMeta(potionMeta);
+      player.getInventory().addItem(potion);
+    }
+
+    potionMeta.setBasePotionType(PotionType.POISON);
+    potion.setItemMeta(potionMeta);
+    player.getInventory().addItem(potion);
+
+    potionMeta.setBasePotionType(PotionType.SLOWNESS);
+    potion.setItemMeta(potionMeta);
+    player.getInventory().addItem(potion);
   }
 }

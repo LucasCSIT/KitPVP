@@ -19,7 +19,9 @@ Any breakable part of a kit (i.e. armor, weapons) will have Unbreaking applied.
 * **Archer**: Chainmail Armor with Wooden Sword & Bow & Leaping II
 * **Warrior**: Iron Armor with Iron Sword
 * **Pyro**: Leather Armor with Wooden Sword & Flint-and-Steel
-* **Mage**: Golden Armor with Gold Sword & Potions of Harming, Poison, & Slowness
+* **Mage**: Golden Armor with Gold Sword & Potions
+   * **Drinkable Potions**: 1x each Healing I, Strength I,
+   * **Splash Potions**: 2x each Harming I and Weakness I & 1x each Poison I and Slowness I, 
 
 ## Installation
 1. Download [PaperMC v1.21.11](https://papermc.io).

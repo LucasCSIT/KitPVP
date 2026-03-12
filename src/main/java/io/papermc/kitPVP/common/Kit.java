@@ -12,6 +12,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class Kit {
+  /**
+   * Equips the kit that was selected by the player by giving the player all required armor, weapons, status effects, and potions.
+   * @param player
+   * @param armor
+   * @param weapons
+   * @param potionEffects
+   * @param canSprint
+   */
   protected void equipKit(Player player, Material[] armor, HashMap<Material, Integer> weapons, HashMap<PotionEffectType, Integer> potionEffects, boolean canSprint) {
     clearInventory(player);
     removeStats(player);
@@ -27,20 +35,40 @@ public abstract class Kit {
     setSprinting(player, canSprint);
   }
 
+  /**
+   * Gives the player the required weaponry.
+   * @param player
+   * @param weapon
+   * @param quantity
+   */
   private void giveWeaponry(Player player, Material weapon, Integer quantity) {
     player.getInventory().addItem(new ItemStack(weapon, quantity));
   }
 
+  /**
+   * Gives the player the required armor.
+   * @param player
+   * @param armor
+   */
   private void giveArmor(Player player, Material armor) {
     player.getInventory().addItem(new ItemStack(armor));
   }
 
+  /**
+   * Gives the player the required stats.
+   * @param player
+   * @param potionEffects
+   */
   private void setStats(Player player, HashMap<PotionEffectType, Integer> potionEffects) {
     for (Map.Entry<PotionEffectType, Integer> potionEffect : potionEffects.entrySet()) {
       player.addPotionEffect(new PotionEffect(potionEffect.getKey(), Integer.MAX_VALUE, potionEffect.getValue()));
     }
   }
 
+  /**
+   * Gives the player the required status effects.
+   * @param player
+   */
   protected void removeStats(Player player) {
     for (PotionEffect effect : player.getActivePotionEffects()) {
       player.removePotionEffect(effect.getType());
@@ -48,18 +76,36 @@ public abstract class Kit {
     player.setSprinting(true);
   }
 
+  /**
+   * Enables or disables sprinting for the player depending on the selected kit.
+   * @param player
+   * @param canSprint
+   */
   private void setSprinting(Player player, boolean canSprint) {
     player.setSprinting(canSprint);
   }
 
+  /**
+   * Clears the inventory of the player.
+   * @param player
+   */
   protected void clearInventory(Player player) {
     player.getInventory().clear();
   }
 
+  /**
+   * Checks if the arguments of a command is empty.
+   * @param args
+   * @return {@code True} if the arguments of a command is empty.
+   */
   protected boolean isCommandArgsEmpty(String[] args) {
     return args.length == 0;
   }
 
+  /**
+   * Sends an announcement upon specific command execution.
+   * @param message
+   */
   protected void announce(Component message) {
     Bukkit.broadcast(message);
   }

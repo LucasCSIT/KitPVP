@@ -78,7 +78,6 @@ public class Mage extends Kit implements BasicCommand {
     weapons.put(Material.GOLDEN_SWORD, 1);
   }
 
-  // TODO: Put this in Kit.java so other kits can utilize this
   private void giveDrinkablePotions(Player player) {
     ItemStack potion = new ItemStack(Material.POTION);
     PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();
@@ -92,7 +91,6 @@ public class Mage extends Kit implements BasicCommand {
     player.getInventory().addItem(potion);
   }
 
-  // TODO: Put this in Kit.java so other kits can utilize this
   private void giveSplashPotions(Player player) {
     ItemStack potion = new ItemStack(Material.SPLASH_POTION);
     PotionMeta potionMeta = (PotionMeta) potion.getItemMeta();

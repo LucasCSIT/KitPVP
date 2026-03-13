@@ -1,7 +1,7 @@
 name: KitPVP
 version: 1.0.0
 main: io.papermc.kitPVP.KitPVP
-description: A KitPVP plugin that includes five differents kits to equip!
+description: A KitPVP plugin that includes five different kits to equip!
 author: Lucas Garcia
 api-version: '1.21.11'
 load: STARTUP

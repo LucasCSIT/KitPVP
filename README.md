@@ -25,7 +25,7 @@ Any breakable part of a kit (i.e. armor, weapons) will have Unbreaking applied.
 
 ## Installation
 1. Download [PaperMC v1.21.11](https://papermc.io).
-2. Download the plugin from the [official Hangar page](https://hangar.papermc.io/Sharp/Thor).
+2. Download the plugin from the [official Hangar page](https://hangar.papermc.io/Sharp/KitPVP).
 3. Drag the `.jar` file into your PaperMC server's `plugins` folder.
 4. Start the PaperMC server by doing `cd /path/to/server/` and executing `java -Xms4G -Xmx4G -jar paper.jar --nogui` in the Terminal.
    - See [PaperMC Getting Started](https://docs.papermc.io/paper/getting-started/) for more info.

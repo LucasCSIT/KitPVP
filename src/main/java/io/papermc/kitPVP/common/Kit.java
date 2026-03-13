@@ -14,11 +14,11 @@ import java.util.Map;
 public abstract class Kit {
   /**
    * Equips the kit that was selected by the player by giving the player all required armor, weapons, status effects, and potions.
-   * @param player
-   * @param armor
-   * @param weapons
-   * @param potionEffects
-   * @param canSprint
+   * @param player The {@code Player} executing the command.
+   * @param armor All of the armor in a {@code Material[]} to be equipped.
+   * @param weapons All of the weapons in a {@code HashMap<Material, Integer>} to be equipped.
+   * @param potionEffects All of the potion effects in a {@code HashMap<Material, Integer>} to be applied
+   * @param canSprint A {@code Boolean} for if the player is allowed to sprint. Value is dependent on the kit itself.
    */
   protected void equipKit(Player player, Material[] armor, HashMap<Material, Integer> weapons, HashMap<PotionEffectType, Integer> potionEffects, boolean canSprint) {
     clearInventory(player);
@@ -37,9 +37,9 @@ public abstract class Kit {
 
   /**
    * Gives the player the required weaponry.
-   * @param player
-   * @param weapon
-   * @param quantity
+   * @param player The {@code Player} equipping the kit.
+   * @param weapon The weapon to be equipped.
+   * @param quantity The number of that weapon to be equipped.
    */
   private void giveWeaponry(Player player, Material weapon, Integer quantity) {
     player.getInventory().addItem(new ItemStack(weapon, quantity));
@@ -47,8 +47,8 @@ public abstract class Kit {
 
   /**
    * Gives the player the required armor.
-   * @param player
-   * @param armor
+   * @param player The {@code Player} equipping the kit.
+   * @param armor The armor to be equipped.
    */
   private void giveArmor(Player player, Material armor) {
     player.getInventory().addItem(new ItemStack(armor));
@@ -56,8 +56,8 @@ public abstract class Kit {
 
   /**
    * Gives the player the required stats.
-   * @param player
-   * @param potionEffects
+   * @param player The {@code Player} equipping the kit.
+   * @param potionEffects All of the potion effects to be applied along with the level for each potion effect.
    */
   private void setStats(Player player, HashMap<PotionEffectType, Integer> potionEffects) {
     for (Map.Entry<PotionEffectType, Integer> potionEffect : potionEffects.entrySet()) {
@@ -67,7 +67,7 @@ public abstract class Kit {
 
   /**
    * Gives the player the required status effects.
-   * @param player
+   * @param player The {@code Player} executing the kit command.
    */
   protected void removeStats(Player player) {
     for (PotionEffect effect : player.getActivePotionEffects()) {
@@ -78,8 +78,8 @@ public abstract class Kit {
 
   /**
    * Enables or disables sprinting for the player depending on the selected kit.
-   * @param player
-   * @param canSprint
+   * @param player The {@code Player} executing the kit command.
+   * @param canSprint A {@code Boolean} that determines if the player can sprint.
    */
   private void setSprinting(Player player, boolean canSprint) {
     player.setSprinting(canSprint);
@@ -87,7 +87,7 @@ public abstract class Kit {
 
   /**
    * Clears the inventory of the player.
-   * @param player
+   * @param player The {@code Player} executing the command.
    */
   protected void clearInventory(Player player) {
     player.getInventory().clear();
@@ -95,7 +95,7 @@ public abstract class Kit {
 
   /**
    * Checks if the arguments of a command is empty.
-   * @param args
+   * @param args The arguments of a command.
    * @return {@code True} if the arguments of a command is empty.
    */
   protected boolean isCommandArgsEmpty(String[] args) {
@@ -104,7 +104,7 @@ public abstract class Kit {
 
   /**
    * Sends an announcement upon specific command execution.
-   * @param message
+   * @param message The message of type {@code Component} that is broadcasted across the server.
    */
   protected void announce(Component message) {
     Bukkit.broadcast(message);
